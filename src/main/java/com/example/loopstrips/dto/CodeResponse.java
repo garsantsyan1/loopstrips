@@ -14,4 +14,6 @@ public class CodeResponse {
     private String status;
     private String message;
     private String code;
+    private String flavor;
+    private int scanCount;
 }

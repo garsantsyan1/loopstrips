@@ -19,7 +19,9 @@ public class Code {
 
     @Id
     private String id;
-    @Column(name = "used")
-    private boolean used;
+    @Column(name = "scan_count")
+    private int scanCount;
+    @Column(name = "flavor")
+    private String flavor;
 
 }

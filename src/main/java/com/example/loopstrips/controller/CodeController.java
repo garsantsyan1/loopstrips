@@ -5,7 +5,7 @@ import com.example.loopstrips.service.CodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -15,14 +15,13 @@ public class CodeController {
 
     private final CodeService codeService;
 
-    @GetMapping("/check")
-    public ResponseEntity<CodeResponse> checkCode(@RequestParam String code) {
-        if (code.isBlank()) {
+    @GetMapping("/qr/{code}")
+    public ResponseEntity<CodeResponse> checkCode(@PathVariable String code) {
+        if (code == null || code.isBlank()) {
             return ResponseEntity.badRequest().body(
-                    new CodeResponse("error", "Параметр code обязателен", null)
+                    new CodeResponse("error", "Параметр code обязателен", null, null, 0)
             );
         }
-
         return ResponseEntity.ok(codeService.checkCode(code));
     }
 }
