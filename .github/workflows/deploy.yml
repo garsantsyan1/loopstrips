@@ -32,7 +32,7 @@ jobs:
           source: "Dockerfile,docker-compose.yml,target/*.jar,mysql"
           target: "/home/ubuntu/app"
 
-      - name: Restart app on server via SSH
+      - name: Restart deploy script on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -42,5 +42,5 @@ jobs:
           envs: MYSQL_ROOT_PASSWORD,MYSQL_DATABASE,MYSQL_HOST,MYSQL_PORT
           script: |
             cd /home/ubuntu/app
-            docker-compose down
-            docker-compose up -d --build
+            chmod +x ./deploy.sh
+            ./deploy.sh

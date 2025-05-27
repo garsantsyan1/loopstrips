@@ -3,7 +3,6 @@ package com.example.loopstrips.controller;
 import com.example.loopstrips.dto.CodeResponse;
 import com.example.loopstrips.service.CodeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,7 @@ public class CodeController {
 
     private final CodeService codeService;
 
-    @GetMapping(value = "/qr/{code}", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    @GetMapping(value = "/qr/{code}", produces = "application/json; charset=UTF-8")
     public ResponseEntity<CodeResponse> checkCode(@PathVariable String code) {
         if (code == null || code.isBlank()) {
             return ResponseEntity.badRequest().body(
