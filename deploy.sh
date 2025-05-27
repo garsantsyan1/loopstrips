@@ -1,35 +1,32 @@
 #!/bin/bash
 
-# === 1. Генерация .env ===
+set -e
+
+# === 1. Убедитесь, что .env существует ===
 if [ ! -f "./.env" ]; then
-  echo "Creating .env file..."
-  cat > ./.env <<EOL
-MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-MYSQL_DATABASE=${MYSQL_DATABASE}
-MYSQL_HOST=loopstrips-db
-MYSQL_PORT=3306
-
-SPRING_DATASOURCE_URL=jdbc:mysql://loopstrips-db:3306/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-SPRING_DATASOURCE_USERNAME=root
-SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
-EOL
-else
-  echo "File .env already exists."
-fi
-
-# === 2. Остановка контейнеров ===
-docker-compose --env-file .env down -v || true
-
-# === 3. Удаление старых образов (необязательно) ===
-docker image prune -f --filter "until=24h" || true
-
-# === 4. Проверка JAR-файла ===
-if [ ! -f "target/loopstrips-1.0.0.jar" ]; then
-  echo "JAR file not found! Deployment aborted."
+  echo "❌ .env file not found. Please check deployment."
   exit 1
 fi
 
-# === 5. Перезапуск с билдом ===
+# === 2. Загрузите переменные из .env ===
+export $(cat ./.env | grep -v '#' | awk '/=/ {print $1}')
+
+# === 3. Проверьте JAR файл ===
+if [ ! -f "target/loopstrips-1.0.0.jar" ]; then
+  echo "❌ JAR file not found!"
+  exit 1
+fi
+
+# === 4. Остановка старых контейнеров ===
+echo "🛑 Stopping old containers..."
+docker-compose --env-file .env down -v || true
+
+# === 5. Пересборка образов (если нужно) ===
+echo "🧱 Pruning old images..."
+docker image prune -f --filter "until=24h" || true
+
+# === 6. Собираем и запускаем новые контейнеры ===
+echo "🚀 Starting new containers..."
 docker-compose --env-file .env up -d --build
 
-echo "✅ Deployment completed!"
+echo "✅ Deployment completed successfully!"
