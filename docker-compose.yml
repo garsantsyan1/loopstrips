@@ -10,12 +10,14 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./mysql/sqlScript.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/conf.d:/etc/mysql/conf.d
     ports:
       - "3306:3306"
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-      - --default-authentication-plugin=mysql_native_password
+      - --init-connect='SET NAMES utf8mb4'
+      - --skip-character-set-client-handshake
     restart: unless-stopped
 
   loopstrips-app:
