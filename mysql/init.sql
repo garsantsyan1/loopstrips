@@ -32,4 +32,3 @@ END //
 DELIMITER ;
 
 CALL generate_flavored_codes();
-DROP PROCEDURE IF EXISTS generate_flavored_codes;
