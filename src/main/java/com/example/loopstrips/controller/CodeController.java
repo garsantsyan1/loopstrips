@@ -3,7 +3,7 @@ package com.example.loopstrips.controller;
 import com.example.loopstrips.dto.CodeResponse;
 import com.example.loopstrips.service.CodeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +28,9 @@ public class CodeController {
 
     @GetMapping("/")
     public ResponseEntity<String> home() {
-        return ResponseEntity.ok("API is running");
-    }
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body("API is running");
 
+    }
 }
