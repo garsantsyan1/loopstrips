@@ -27,8 +27,8 @@ public class CodeController {
     }
 
     @GetMapping("/")
-    public String home() {
-        return "index"; // -> index.html в templates/
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("API is running");
     }
 
 }

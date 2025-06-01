@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("https://loopstripes.ru", "https://loopstripes.tilda.ws", "https://thehiabonuscheckbot.ru")
                 .allowedMethods("GET", "POST")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }
