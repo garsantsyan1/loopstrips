@@ -26,19 +26,9 @@ public class CodeController {
         return ResponseEntity.ok(codeService.checkCode(code));
     }
 
-
-    @GetMapping("/ping")
-    public String ping() {
-        return "pong";
-    }
-
-    @RestController
-    public class ErrorController {
-
-        @GetMapping("/error")
-        public ResponseEntity<String> handleError() {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        }
+    @GetMapping("/")
+    public String home() {
+        return "index"; // -> index.html в templates/
     }
 
 }

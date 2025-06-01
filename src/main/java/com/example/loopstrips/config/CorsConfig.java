@@ -9,8 +9,9 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/qr/**") // разрешаем CORS только для /qr/...
-                .allowedOrigins("https://loopstripes.ru", "https://loopstripes.tilda.ws", "https://thehiabonuscheckbot.ru")  // домены, которые могут делать запросы
-                .allowedMethods("GET"); // какие HTTP методы разрешены
+        registry.addMapping("/**")
+                .allowedOrigins("https://loopstripes.ru", "https://loopstripes.tilda.ws", "https://thehiabonuscheckbot.ru")
+                .allowedMethods("GET", "POST")
+                .allowedHeaders("*");
     }
 }
