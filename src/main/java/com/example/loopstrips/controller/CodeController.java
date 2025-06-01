@@ -3,6 +3,7 @@ package com.example.loopstrips.controller;
 import com.example.loopstrips.dto.CodeResponse;
 import com.example.loopstrips.service.CodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,4 +25,20 @@ public class CodeController {
         }
         return ResponseEntity.ok(codeService.checkCode(code));
     }
+
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
+
+    @RestController
+    public class ErrorController {
+
+        @GetMapping("/error")
+        public ResponseEntity<String> handleError() {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        }
+    }
+
 }
