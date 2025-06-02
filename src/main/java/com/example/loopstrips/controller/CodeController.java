@@ -33,4 +33,7 @@ public class CodeController {
                 .body("API is running");
 
     }
+
+    @GetMapping("/favicon.ico")
+    public void favicon() {}
 }
