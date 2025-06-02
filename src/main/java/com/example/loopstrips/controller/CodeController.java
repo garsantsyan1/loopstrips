@@ -34,6 +34,4 @@ public class CodeController {
 
     }
 
-    @GetMapping("/favicon.ico")
-    public void favicon() {}
 }
